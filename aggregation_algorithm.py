@@ -168,7 +168,11 @@ async def month_aggregating(collection, start_date, end_date) -> dict:
 
 
 async def aggregate(data):
-    data = json.loads(data)
+    try:
+        data = json.loads(data)
+    except json.decoder.JSONDecodeError:
+        return 0
+
     start_date_str = data['dt_from']
     start_date = datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S')
     end_date_str = data['dt_upto']

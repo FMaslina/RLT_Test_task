@@ -20,7 +20,10 @@ async def start_command(message: types.Message):
 @dp.message(F.text)
 async def send_aggregated_data(message: types.Message):
     aggregated_data = await aggregate(message.text)
-    await message.reply(str(aggregated_data))
+    if aggregated_data == 0:
+        await message.reply("Некорректный ввод")
+    else:
+        await message.reply(str(aggregated_data))
 
 dp.message.register(send_aggregated_data, F.text)
 
